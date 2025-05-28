@@ -50,6 +50,8 @@ public class MessageExportService {
                 document.add(new Paragraph(line));
             }
 
+            WatermarkService.addImageWatermark(pdf);
+
             document.close();
             return output.toByteArray();
         } catch (Exception e) {
