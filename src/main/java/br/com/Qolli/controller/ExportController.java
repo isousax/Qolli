@@ -1,7 +1,7 @@
 package br.com.Qolli.controller;
 
-import br.com.Qolli.service.MessageExportService;
-import br.com.Qolli.service.ProfileExportService;
+import br.com.Qolli.service.export.MessageExportService;
+import br.com.Qolli.service.export.ProfileExportService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

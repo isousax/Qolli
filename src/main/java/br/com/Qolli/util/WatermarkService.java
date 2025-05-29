@@ -1,4 +1,4 @@
-package br.com.Qolli.service;
+package br.com.Qolli.util;
 
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
