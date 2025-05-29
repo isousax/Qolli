@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Secret ###
+!**/src/main/resources/firebase-service-account.json
+firebase-service-account.json

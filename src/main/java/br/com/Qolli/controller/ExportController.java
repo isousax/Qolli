@@ -1,6 +1,7 @@
 package br.com.Qolli.controller;
 
-import br.com.Qolli.service.ExportService;
+import br.com.Qolli.service.export.MessageExportService;
+import br.com.Qolli.service.export.ProfileExportService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,15 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/export")
 public class ExportController {
-    private final ExportService service;
+    private final MessageExportService messageExportService;
+    private final ProfileExportService profileExportService;
 
-    public ExportController(ExportService service) {
-        this.service = service;
+    public ExportController(MessageExportService service, ProfileExportService profileExportService) {
+        this.messageExportService = service;
+        this.profileExportService = profileExportService;
     }
 
     @GetMapping("/message.json")
-    public ResponseEntity<byte[]> exportMessageJson(@RequestParam Long userId) {
-        byte[] json = service.generateMessageJson(userId);
+    public ResponseEntity<byte[]> exportMessageJson(@RequestParam String conversationKey) {
+        byte[] json = messageExportService.generateMessageJson(conversationKey);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Message.json")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -28,20 +31,20 @@ public class ExportController {
     }
 
     @GetMapping("/message.pdf")
-    public ResponseEntity<byte[]> exportMessagePdf(@RequestParam Long userId) {
-        byte[] pdf = service.generateMessagePdf(userId);
+    public ResponseEntity<byte[]> exportMessagePdf(@RequestParam String conversationKey) {
+        byte[] pdf = messageExportService.generateMessagePdf(conversationKey);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Message.pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdf);
     }
 
-    @GetMapping("/profile")
-    public ResponseEntity<byte[]> exportProfile(@RequestParam Long userId) {
-        byte[] json = service.generateProfileJson(userId);
+    @GetMapping("/profile.pdf")
+    public ResponseEntity<byte[]> exportProfile(@RequestParam String userId) {
+        byte[] pdf = profileExportService.generateProfilePdf(userId);
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Profile.json")
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(json);
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Profile.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
     }
 }
