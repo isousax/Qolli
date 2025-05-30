@@ -32,10 +32,11 @@ public class ProfilePdfBuilder {
             addTitle(document);
             addLine(document);
             addUserInfoTable(document, profile);
-            addFooter(document);
 
+            document.flush();
             WatermarkService.addImageWatermark(pdf);
 
+            addFooter(document);
             document.close();
             return output.toByteArray();
         } catch (Exception e) {
